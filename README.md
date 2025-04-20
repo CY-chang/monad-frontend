@@ -918,3 +918,67 @@ export const useTradeHistory = () => {
 
 此时，我们就完成了前端中三个最重要的组件的开发。
 
+## 部署
+
+### 初始化钱包
+首先，我们需要初始化部署钱包，执行以下命令，如果你已经有同名钱包了，可以跳过这一步步骤
+
+```shell
+cast wallet import monad-deployer --private-key $(cast wallet new | grep 'Private key:' | awk '{print $3}')
+```
+
+查看钱包地址
+
+```shell
+cast wallet address --account monad-deployer
+
+# 返回结果
+# ➜ cast wallet address --account monad-deployer
+# Enter keystore password:
+# 0x86FB52fA9105d4f60AE8c47F946F4d7234132f68
+```
+
+此时请注意，你需要往这个地址中转移一些TMON
+
+### 设置网络
+进入 `packages/foundry/foundry.toml`，添加Monad测试网RPC。
+
+```toml
+[rpc_endpoints]
+# ...
+
+monadTestnet="https://testnet-rpc.monad.xyz"
+```
+
+### 部署到网络
+执行一下命令
+```shell
+yarn deploy --network monadTestnet
+#➜ yarn deploy --network monadTestnet
+
+#🔑 Available keystores:
+#0. Create new keystore
+#1. monad-deployer
+#2. scaffold-eth-custom
+
+#Select a keystore or create new (enter number): 
+#输入1
+```
+如果你看到类似这样的日记，那么说明你部署成功了。
+```shell
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /***/packages/foundry/broadcast/Deploy.s.sol/10143/run-latest.json
+
+Sensitive values saved to: /***/packages/foundry/cache/Deploy.s.sol/10143/run-latest.json
+
+node scripts-js/generateTsAbis.js
+📝 Updated TypeScript contract definition file on ../nextjs/contracts/deployedContracts.ts
+```
+
+## 运行
+此时，你可以执行
+```shell
+yarn start
+```
+感受在Monad上CLOB的惊人速度。
