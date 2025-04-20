@@ -26,8 +26,6 @@ scrollSepolia = "https://sepolia-rpc.scroll.io"
 scroll = "https://rpc.scroll.io"
 pgn = "https://rpc.publicgoods.network"
 pgnTestnet = "https://sepolia.publicgoods.network"
-# Monad Testnet Configuration
-monadTestnet="https://testnet-rpc.monad.xyz"
 
 localhost = "http://127.0.0.1:8545"
 

@@ -16,34 +16,7 @@ export const TradeForm = () => {
   const [price, setPrice] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // CLOB合约下单
-  const { writeContractAsync: placeClobOrder, isPending: isPlacingOrder } = useScaffoldWriteContract({
-    contractName: "CLOB",
-  });
-
-  // 提交订单
-  const handleSubmitOrder = async () => {
-    if (!price || !amount || !connectedAddress) return;
-
-    try {
-      setSubmitting(true);
-
-      // 下单
-      await placeClobOrder({
-        functionName: "placeOrder",
-        args: [parseEther(price), parseEther(amount), tradeType === "buy" ? true : false],
-      });
-
-      // 重置表单
-      setAmount("");
-      setPrice("");
-    } catch (error) {
-      console.error("Order submission error:", error);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
+  // TODO: 实现发送交易组件
   return (
     <div className="space-y-4">
       {/* 买卖选择器 */}
