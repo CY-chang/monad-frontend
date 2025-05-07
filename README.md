@@ -919,6 +919,10 @@ export const useTradeHistory = () => {
 此时，我们就完成了前端中三个最重要的组件的开发。
 
 ## 部署
+安装依赖
+```shell
+yarn install
+```
 
 ### 初始化钱包
 首先，我们需要初始化部署钱包，执行以下命令，如果你已经有同名钱包了，可以跳过这一步步骤
@@ -951,8 +955,10 @@ monadTestnet="https://testnet-rpc.monad.xyz"
 ```
 
 ### 部署到网络
+
 执行一下命令
 ```shell
+yarn compile
 yarn deploy --network monadTestnet
 #➜ yarn deploy --network monadTestnet
 
