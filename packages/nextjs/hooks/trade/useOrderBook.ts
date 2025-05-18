@@ -26,7 +26,33 @@ export type OrderBookData = readonly [
 ];
 
 export const useOrderBook = () => {
-  // TODO: 实现订单簿数据获取逻辑
+  const [mergedAsks, setMergedAsks] = useState<MergedOrderType[]>([]);
+  const [mergedBids, setMergedBids] = useState<MergedOrderType[]>([]);
+
+  // 使用新添加的getOrderBook函数获取完整订单簿
+  const {
+    data: orderBookData,
+    refetch: refetchOrderBook,
+    isLoading,
+  } = useScaffoldReadContract({
+    contractName: "CLOB",
+    functionName: "getOrderBook",
+  });
+
+  // 处理订单簿数据
+  useEffect(() => {
+    if (orderBookData) {
+      try {
+        const { sortedMergedAsks, sortedMergedBids } = handleOrderBookData(orderBookData);
+        setMergedAsks(sortedMergedAsks);
+        setMergedBids(sortedMergedBids);
+      } catch (error) {
+        console.error("Error processing order book data:", error);
+      }
+    }
+  }, [orderBookData]);
+
+  return { mergedAsks, mergedBids, isLoading, refetchOrderBook };
 };
 
 function handleOrderBookData(orderBookData: OrderBookData): {
